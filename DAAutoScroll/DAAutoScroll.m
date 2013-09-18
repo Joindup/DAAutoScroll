@@ -50,10 +50,9 @@ static char UIScrollViewAutoScrollTimer;
     }
     else
     {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:animationDuration];
-        self.contentOffset = newOffset;
-        [UIView commitAnimations];
+        [UIView animateWithDuration:animationDuration animations:^{
+			self.contentOffset = newOffset;
+		}];
     }
 }
 
@@ -99,12 +98,14 @@ static char UIScrollViewAutoScrollTimer;
 
 - (void)setScrollPointsPerSecond:(CGFloat)scrollPointsPerSecond
 {
+	[self stopScrolling];
     [self willChangeValueForKey:@"scrollPointsPerSecond"];
     objc_setAssociatedObject(self,
                              &UIScrollViewScrollPointsPerSecondNumber,
                              [NSNumber numberWithFloat:scrollPointsPerSecond],
                              OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self didChangeValueForKey:@"scrollPointsPerSecond"];
+	[self startScrolling];
 }
 
 - (NSTimer *)autoScrollTimer
