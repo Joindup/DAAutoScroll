@@ -50,9 +50,9 @@ static char UIScrollViewAutoScrollTimer;
     }
     else
     {
-        [UIView animateWithDuration:animationDuration animations:^{
-			self.contentOffset = newOffset;
-		}];
+		[UIView animateKeyframesWithDuration:animationDuration delay:0 options:UIViewKeyframeAnimationOptionAllowUserInteraction | UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+			[self setContentOffset:newOffset];
+		} completion:NULL];
     }
 }
 
